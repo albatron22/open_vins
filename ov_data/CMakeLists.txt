@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.3)
+cmake_minimum_required(VERSION 3.16)
 project(ov_data)
 
 # Find our ROS version!
@@ -8,9 +8,13 @@ find_package(catkin QUIET COMPONENTS roscpp)
 find_package(ament_cmake QUIET)
 if (catkin_FOUND)
     message(STATUS "ROS *1* version found")
+    install(DIRECTORY sim/ DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/sim
+            FILES_MATCHING PATTERN "*.txt")
     catkin_package()
 elseif (ament_cmake_FOUND)
     message(STATUS "ROS *2* version found")
+    install(DIRECTORY sim/ DESTINATION share/${PROJECT_NAME}/sim
+            FILES_MATCHING PATTERN "*.txt")
     ament_package()
 else ()
     message(STATUS "No ROS versions found, doing nothing...")

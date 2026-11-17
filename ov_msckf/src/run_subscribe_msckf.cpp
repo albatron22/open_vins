@@ -115,8 +115,12 @@ int main(int argc, char **argv) {
   // Final visualization
   viz->visualize_final();
 #if ROS_AVAILABLE == 1
+  viz = nullptr; // ensure publishers are destroyed before ros::shutdown()
+  sys = nullptr;
   ros::shutdown();
 #elif ROS_AVAILABLE == 2
+  viz = nullptr; // ensure publishers are destroyed before rclcpp::shutdown() (fatal on ROS2 Jazzy)
+  sys = nullptr;
   rclcpp::shutdown();
 #endif
 

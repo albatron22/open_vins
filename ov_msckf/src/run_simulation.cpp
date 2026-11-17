@@ -180,9 +180,15 @@ int main(int argc, char **argv) {
   // Final visualization
 #if ROS_AVAILABLE == 1
   viz->visualize_final();
+  viz = nullptr; // ensure publishers are destroyed before ros::shutdown()
+  sim = nullptr;
+  sys = nullptr;
   ros::shutdown();
 #elif ROS_AVAILABLE == 2
   viz->visualize_final();
+  viz = nullptr; // ensure publishers are destroyed before rclcpp::shutdown() (fatal on ROS2 Jazzy)
+  sim = nullptr;
+  sys = nullptr;
   rclcpp::shutdown();
 #endif
 
